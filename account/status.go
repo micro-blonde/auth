@@ -3,7 +3,8 @@ package account
 type Status uint64
 
 const (
-	StatusVerified Status = 0b1 << iota
+	StatusRegistered Status = 0b1 << iota
+	StatusVerified
 	StatusRejected
 	StatusBlocked
 	StatusDisabled

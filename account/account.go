@@ -7,7 +7,7 @@ type Base struct {
 }
 
 type Account[T Model] struct {
-	Base
+	Base `gorm:"embedded" json:",inline"`
 
 	T T `gorm:"embedded" json:",inline"`
 }
