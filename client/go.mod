@@ -5,7 +5,6 @@ go 1.22.3
 require (
 	github.com/ginger-core/compound/registry v0.0.0-20230608151919-2963b75416c3
 	github.com/ginger-core/errors v0.0.0-20230703084505-b10c3f9cedfb
-	github.com/ginger-core/errors/grpc v0.0.0-20230703084505-b10c3f9cedfb
 	github.com/ginger-core/log v0.0.0-20240629145652-3b2876535940
 	github.com/micro-blonde/auth/proto v0.0.0-20240629170203-0a760eb7bb4d
 	google.golang.org/grpc v1.64.0
@@ -35,3 +34,5 @@ require (
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/micro-blonde/auth => ../

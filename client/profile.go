@@ -3,18 +3,18 @@ package client
 import (
 	"context"
 
-	"github.com/ginger-core/errors"
-	"github.com/ginger-core/errors/grpc"
 	"github.com/micro-blonde/auth/proto/auth/account/profile"
+	"google.golang.org/grpc"
 )
 
-func (c *client) GetProfile(ctx context.Context,
-	in *profile.GetRequest) (*profile.Profile, errors.Error) {
-	r, err := c.grpcClient.GetProfile(ctx, in)
-	if err != nil {
-		return nil, grpc.Parse(err).
-			WithDesc("error on get profile").
-			WithTrace("grpcClient.GetAccount.Err")
+func (c *client) GetProfile(ctx context.Context, in *profile.GetRequest, opts ...grpc.CallOption) (*profile.Profile, error) {
+	result := new(profile.Profile)
+	if err := c.ensureService(); err != nil {
+		return result, err
 	}
-	return r, nil
+	result, err := c.client.GetProfile(ctx, in, opts...)
+	if err != nil {
+		return result, err
+	}
+	return result, nil
 }

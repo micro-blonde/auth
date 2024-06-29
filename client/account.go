@@ -3,29 +3,32 @@ package client
 import (
 	"context"
 
-	"github.com/ginger-core/errors"
-	"github.com/ginger-core/errors/grpc"
 	"github.com/micro-blonde/auth/proto/auth/account"
+	"google.golang.org/grpc"
 )
 
 func (c *client) GetAccount(ctx context.Context,
-	in *account.GetRequest) (*account.Account, errors.Error) {
-	r, err := c.grpcClient.GetAccount(ctx, in)
-	if err != nil {
-		return nil, grpc.Parse(err).
-			WithDesc("error on get account").
-			WithTrace("grpcClient.GetAccount.Err")
+	in *account.GetRequest, opts ...grpc.CallOption) (*account.Account, error) {
+	result := new(account.Account)
+	if err := c.ensureService(); err != nil {
+		return result, err
 	}
-	return r, nil
+	result, err := c.client.GetAccount(ctx, in, opts...)
+	if err != nil {
+		return result, err
+	}
+	return result, nil
 }
 
 func (c *client) ListAccounts(ctx context.Context,
-	in *account.ListRequest) (*account.Accounts, errors.Error) {
-	r, err := c.grpcClient.ListAccounts(ctx, in)
-	if err != nil {
-		return nil, grpc.Parse(err).
-			WithDesc("error on list account").
-			WithTrace("grpcClient.ListAccounts.Err")
+	in *account.ListRequest, opts ...grpc.CallOption) (*account.Accounts, error) {
+	result := new(account.Accounts)
+	if err := c.ensureService(); err != nil {
+		return result, err
 	}
-	return r, nil
+	result, err := c.client.ListAccounts(ctx, in, opts...)
+	if err != nil {
+		return result, err
+	}
+	return result, nil
 }
