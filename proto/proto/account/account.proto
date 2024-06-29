@@ -1,0 +1,15 @@
+syntax = "proto3";
+option go_package = "github.com/micro-blonde/auth/proto/auth/account";
+package account;
+
+import "google/protobuf/struct.proto";
+
+message Account {
+  uint64 id = 1;
+  uint64 status = 2;
+  google.protobuf.Value T = 3;
+}
+
+message Accounts {
+  repeated Account items = 1;
+}

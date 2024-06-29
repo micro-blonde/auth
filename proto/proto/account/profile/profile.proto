@@ -1,0 +1,11 @@
+syntax = "proto3";
+option go_package = "github.com/micro-blonde/auth/proto/auth/account/profile";
+package profile;
+
+import "google/protobuf/struct.proto";
+
+message Profile {
+  string firstName = 1;
+  string lastName = 2;
+  google.protobuf.Value T = 3;
+}

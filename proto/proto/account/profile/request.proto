@@ -1,0 +1,7 @@
+syntax = "proto3";
+option go_package = "github.com/micro-blonde/auth/proto/auth/account/profile";
+package profile;
+
+message GetRequest {
+  uint64 id = 1;
+}
