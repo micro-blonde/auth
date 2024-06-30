@@ -6,7 +6,6 @@ import "proto/account/account.proto";
 import "proto/account/request.proto";
 import "proto/account/profile/profile.proto";
 import "proto/account/profile/request.proto";
-import "proto/account/account_profile.proto";
 
 message Empty {
 }
@@ -15,5 +14,4 @@ service Auth {
   rpc GetAccount(account.GetRequest) returns(account.Account);
   rpc GetProfile(profile.GetRequest) returns(profile.Profile);
   rpc ListAccounts(account.ListRequest) returns(account.Accounts);
-  rpc ListAccountProfiles(account.ListRequest) returns(account.AccountProfiles);
 }

@@ -27,7 +27,6 @@ type AuthClient interface {
 	GetAccount(ctx context.Context, in *account.GetRequest, opts ...grpc.CallOption) (*account.Account, error)
 	GetProfile(ctx context.Context, in *profile.GetRequest, opts ...grpc.CallOption) (*profile.Profile, error)
 	ListAccounts(ctx context.Context, in *account.ListRequest, opts ...grpc.CallOption) (*account.Accounts, error)
-	ListAccountProfiles(ctx context.Context, in *account.ListRequest, opts ...grpc.CallOption) (*account.AccountProfiles, error)
 }
 
 type authClient struct {
@@ -65,15 +64,6 @@ func (c *authClient) ListAccounts(ctx context.Context, in *account.ListRequest, 
 	return out, nil
 }
 
-func (c *authClient) ListAccountProfiles(ctx context.Context, in *account.ListRequest, opts ...grpc.CallOption) (*account.AccountProfiles, error) {
-	out := new(account.AccountProfiles)
-	err := c.cc.Invoke(ctx, "/auth.Auth/ListAccountProfiles", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // AuthServer is the server API for Auth service.
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility
@@ -81,7 +71,6 @@ type AuthServer interface {
 	GetAccount(context.Context, *account.GetRequest) (*account.Account, error)
 	GetProfile(context.Context, *profile.GetRequest) (*profile.Profile, error)
 	ListAccounts(context.Context, *account.ListRequest) (*account.Accounts, error)
-	ListAccountProfiles(context.Context, *account.ListRequest) (*account.AccountProfiles, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -97,9 +86,6 @@ func (UnimplementedAuthServer) GetProfile(context.Context, *profile.GetRequest) 
 }
 func (UnimplementedAuthServer) ListAccounts(context.Context, *account.ListRequest) (*account.Accounts, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAccounts not implemented")
-}
-func (UnimplementedAuthServer) ListAccountProfiles(context.Context, *account.ListRequest) (*account.AccountProfiles, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListAccountProfiles not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
 
@@ -168,24 +154,6 @@ func _Auth_ListAccounts_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_ListAccountProfiles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(account.ListRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthServer).ListAccountProfiles(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/auth.Auth/ListAccountProfiles",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).ListAccountProfiles(ctx, req.(*account.ListRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -204,10 +172,6 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAccounts",
 			Handler:    _Auth_ListAccounts_Handler,
-		},
-		{
-			MethodName: "ListAccountProfiles",
-			Handler:    _Auth_ListAccountProfiles_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

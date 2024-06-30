@@ -8,7 +8,6 @@ protoc --go_out=./out --go_opt=paths=source_relative --go-grpc_out=./out\
     proto/auth.proto \
     proto/account/account.proto \
     proto/account/profile/profile.proto \
-    proto/account/account_profile.proto \
     proto/account/request.proto \
     proto/account/profile/request.proto
 
