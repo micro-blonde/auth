@@ -5,6 +5,7 @@ package profile;
 import "google/protobuf/struct.proto";
 
 message Profile {
+  uint64 id = 1;
   google.protobuf.Value T = 3;
 }
 
