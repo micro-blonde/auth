@@ -7,3 +7,7 @@ import "google/protobuf/struct.proto";
 message Profile {
   google.protobuf.Value T = 3;
 }
+
+message Profiles {
+  repeated Profile items = 1;
+}

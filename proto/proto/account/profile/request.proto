@@ -4,4 +4,10 @@ package profile;
 
 message GetRequest {
   uint64 id = 1;
+  string username = 2;
+}
+
+message ListRequest {
+  repeated uint64 ids = 1;
+  repeated string usernames = 2;
 }
