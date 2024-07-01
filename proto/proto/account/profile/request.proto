@@ -4,8 +4,10 @@ package profile;
 
 message GetRequest {
   uint64 id = 1;
-  string accountKey = 2; // query with account join
-  string accountVal = 3; // value of joined account key
+  string key = 2; // query with column key
+  string val = 3; // value of given key
+  string accountKey = 4; // query with account join
+  string accountVal = 5; // value of joined account key
 }
 
 message ListRequest {
