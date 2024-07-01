@@ -4,6 +4,8 @@ package account;
 
 message GetRequest {
   uint64 id = 1;
+  string key = 2; // query with column key
+  string val = 3; // value of given key
 }
 
 message ListRequest {

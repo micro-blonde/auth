@@ -4,7 +4,8 @@ package profile;
 
 message GetRequest {
   uint64 id = 1;
-  string username = 2;
+  string accountKey = 2; // query with account join
+  string accountVal = 3; // value of joined account key
 }
 
 message ListRequest {
