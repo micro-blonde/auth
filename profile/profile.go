@@ -2,7 +2,7 @@ package profile
 
 type Base struct {
 	Id    uint64
-	Photo string
+	Photo *string
 }
 
 type Profile[T Model] struct {
