@@ -6,7 +6,7 @@ require (
 	github.com/ginger-core/compound/registry v0.0.0-20230608151919-2963b75416c3
 	github.com/ginger-core/errors v0.0.0-20230703084505-b10c3f9cedfb
 	github.com/ginger-core/log v0.0.0-20240629145652-3b2876535940
-	github.com/micro-blonde/auth/proto v0.0.0-20240701180943-810dadf193ac
+	github.com/micro-blonde/auth/proto v0.0.0-20240807093602-f555dd67152f
 	google.golang.org/grpc v1.64.0
 )
 
