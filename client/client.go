@@ -57,6 +57,11 @@ func (c *client) IsConnected() bool {
 }
 
 func (c *client) ensureService() errors.Error {
+	if !c.config.enabled {
+		return errors.Forbidden().
+			WithId("AuthClientNotEnabledError").
+			WithMessage("client is not enabled to perform your request")
+	}
 	if c.conn == nil {
 		return errors.Internal().
 			WithId("ServiceUnavailable").
@@ -66,6 +71,9 @@ func (c *client) ensureService() errors.Error {
 }
 
 func (c *client) ensureConnection() {
+	if !c.config.enabled {
+		return
+	}
 	for {
 		if c.conn != nil {
 			time.Sleep(time.Second)
