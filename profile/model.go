@@ -1,6 +1,7 @@
 package profile
 
 type Model interface {
+	comparable
 	GetDeliveryResult() any
 	GetUpdates() map[string]any
 }
