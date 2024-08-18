@@ -33,13 +33,8 @@ type authorization[T account.Model] struct {
 	captchaVerified bool
 }
 
-func newAuthorization[T account.Model](request gateway.Request,
-	authenticator *authenticator[T], session *Session[T]) (auth Authorization[T]) {
-	auth0 := request.GetAuthorization()
-	if auth0 != nil {
-		auth = auth0.(Authorization[T])
-		return auth.WithSession(session)
-	}
+func newAuthorization[T account.Model](authenticator *authenticator[T],
+	session *Session[T]) (auth Authorization[T]) {
 	auth = &authorization[T]{
 		valuesMtx:     new(sync.RWMutex),
 		values:        make(map[string]any),
@@ -47,6 +42,16 @@ func newAuthorization[T account.Model](request gateway.Request,
 		session:       session,
 	}
 	return auth
+}
+
+func newRequestAuthorization[T account.Model](request gateway.Request,
+	authenticator *authenticator[T], session *Session[T]) (auth Authorization[T]) {
+	auth0 := request.GetAuthorization()
+	if auth0 != nil {
+		auth = auth0.(Authorization[T])
+		return auth.WithSession(session)
+	}
+	return newAuthorization[T](authenticator, session)
 }
 
 func (a *authorization[T]) Set(key string, value any) {

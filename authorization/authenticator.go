@@ -1,6 +1,8 @@
 package authorization
 
 import (
+	"context"
+
 	"github.com/ginger-core/compound/registry"
 	"github.com/ginger-core/errors"
 	"github.com/ginger-core/gateway"
@@ -13,6 +15,8 @@ type Authenticator[T account.Model] interface {
 	ShouldVerifyCaptcha() gateway.Handler
 	MustVerifyCaptcha() gateway.Handler
 
+	AuthenticateToken(ctx context.Context,
+		token string) (Authorization[T], errors.Error)
 	Authenticate(request gateway.Request,
 		token string) (Authorization[T], errors.Error)
 

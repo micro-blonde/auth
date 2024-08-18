@@ -38,7 +38,7 @@ func (h *authenticator[T]) verifyCaptcha(request gateway.Request) errors.Error {
 func (h *authenticator[T]) setCaptchaVerified(request gateway.Request, verified bool) {
 	authModel := request.GetAuthorization()
 	if authModel == nil {
-		authModel = newAuthorization(request, h, nil)
+		authModel = newRequestAuthorization(request, h, nil)
 		request.SetAuthorization(authModel)
 	}
 	authModel.(Authorization[T]).SetCaptchaVerified(verified)
