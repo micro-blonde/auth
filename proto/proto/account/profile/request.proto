@@ -8,6 +8,7 @@ message GetRequest {
   string val = 3; // value of given key
   string accountKey = 4; // query with account join
   string accountVal = 5; // value of joined account key
+  string accountQuery = 6; // query string with account join
 }
 
 message ListRequest {

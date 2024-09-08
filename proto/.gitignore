@@ -18,3 +18,7 @@ go_build
 .vscode/%
 .idea
 temp
+
+protobuf/
+proto/google/
+ts/

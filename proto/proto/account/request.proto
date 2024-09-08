@@ -6,6 +6,7 @@ message GetRequest {
   uint64 id = 1;
   string key = 2; // query with column key
   string val = 3; // value of given key
+  string query = 4; // query string
 }
 
 message ListRequest {

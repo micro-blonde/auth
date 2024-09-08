@@ -2,10 +2,10 @@ syntax = "proto3";
 option go_package = "github.com/micro-blonde/auth/proto/auth";
 package auth;
 
-import "proto/account/account.proto";
-import "proto/account/request.proto";
-import "proto/account/profile/profile.proto";
-import "proto/account/profile/request.proto";
+import "account/account.proto";
+import "account/request.proto";
+import "account/profile/profile.proto";
+import "account/profile/request.proto";
 
 message Empty {
 }
