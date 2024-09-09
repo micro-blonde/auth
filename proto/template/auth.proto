@@ -1,0 +1,17 @@
+syntax = "proto3";
+option go_package = "github.com/micro-blonde/auth/proto/auth";
+package auth;
+
+import "request.proto";
+import "account/account.proto";
+import "account/profile/profile.proto";
+
+message Empty {
+}
+
+service Auth {
+  rpc ListAccounts(Request) returns(account.Accounts);
+  rpc GetAccount(Request) returns(account.Account);
+  rpc ListProfiles(Request) returns(profile.Profiles);
+  rpc GetProfile(Request) returns(profile.Profile);
+}

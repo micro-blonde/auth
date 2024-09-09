@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package auth;
+option go_package = "github.com/micro-blonde/auth/proto/auth";
+
+message Request {
+    map<string, string> headers = 1;
+    map<string, string> queries = 2;
+    map<string, string> params = 3;
+}

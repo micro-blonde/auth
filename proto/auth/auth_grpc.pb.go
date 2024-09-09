@@ -24,10 +24,10 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthClient interface {
-	ListAccounts(ctx context.Context, in *account.ListRequest, opts ...grpc.CallOption) (*account.Accounts, error)
-	GetAccount(ctx context.Context, in *account.GetRequest, opts ...grpc.CallOption) (*account.Account, error)
-	ListProfiles(ctx context.Context, in *profile.ListRequest, opts ...grpc.CallOption) (*profile.Profiles, error)
-	GetProfile(ctx context.Context, in *profile.GetRequest, opts ...grpc.CallOption) (*profile.Profile, error)
+	ListAccounts(ctx context.Context, in *Request, opts ...grpc.CallOption) (*account.Accounts, error)
+	GetAccount(ctx context.Context, in *Request, opts ...grpc.CallOption) (*account.Account, error)
+	ListProfiles(ctx context.Context, in *Request, opts ...grpc.CallOption) (*profile.Profiles, error)
+	GetProfile(ctx context.Context, in *Request, opts ...grpc.CallOption) (*profile.Profile, error)
 }
 
 type authClient struct {
@@ -38,7 +38,7 @@ func NewAuthClient(cc grpc.ClientConnInterface) AuthClient {
 	return &authClient{cc}
 }
 
-func (c *authClient) ListAccounts(ctx context.Context, in *account.ListRequest, opts ...grpc.CallOption) (*account.Accounts, error) {
+func (c *authClient) ListAccounts(ctx context.Context, in *Request, opts ...grpc.CallOption) (*account.Accounts, error) {
 	out := new(account.Accounts)
 	err := c.cc.Invoke(ctx, "/auth.Auth/ListAccounts", in, out, opts...)
 	if err != nil {
@@ -47,7 +47,7 @@ func (c *authClient) ListAccounts(ctx context.Context, in *account.ListRequest, 
 	return out, nil
 }
 
-func (c *authClient) GetAccount(ctx context.Context, in *account.GetRequest, opts ...grpc.CallOption) (*account.Account, error) {
+func (c *authClient) GetAccount(ctx context.Context, in *Request, opts ...grpc.CallOption) (*account.Account, error) {
 	out := new(account.Account)
 	err := c.cc.Invoke(ctx, "/auth.Auth/GetAccount", in, out, opts...)
 	if err != nil {
@@ -56,7 +56,7 @@ func (c *authClient) GetAccount(ctx context.Context, in *account.GetRequest, opt
 	return out, nil
 }
 
-func (c *authClient) ListProfiles(ctx context.Context, in *profile.ListRequest, opts ...grpc.CallOption) (*profile.Profiles, error) {
+func (c *authClient) ListProfiles(ctx context.Context, in *Request, opts ...grpc.CallOption) (*profile.Profiles, error) {
 	out := new(profile.Profiles)
 	err := c.cc.Invoke(ctx, "/auth.Auth/ListProfiles", in, out, opts...)
 	if err != nil {
@@ -65,7 +65,7 @@ func (c *authClient) ListProfiles(ctx context.Context, in *profile.ListRequest, 
 	return out, nil
 }
 
-func (c *authClient) GetProfile(ctx context.Context, in *profile.GetRequest, opts ...grpc.CallOption) (*profile.Profile, error) {
+func (c *authClient) GetProfile(ctx context.Context, in *Request, opts ...grpc.CallOption) (*profile.Profile, error) {
 	out := new(profile.Profile)
 	err := c.cc.Invoke(ctx, "/auth.Auth/GetProfile", in, out, opts...)
 	if err != nil {
@@ -78,10 +78,10 @@ func (c *authClient) GetProfile(ctx context.Context, in *profile.GetRequest, opt
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility
 type AuthServer interface {
-	ListAccounts(context.Context, *account.ListRequest) (*account.Accounts, error)
-	GetAccount(context.Context, *account.GetRequest) (*account.Account, error)
-	ListProfiles(context.Context, *profile.ListRequest) (*profile.Profiles, error)
-	GetProfile(context.Context, *profile.GetRequest) (*profile.Profile, error)
+	ListAccounts(context.Context, *Request) (*account.Accounts, error)
+	GetAccount(context.Context, *Request) (*account.Account, error)
+	ListProfiles(context.Context, *Request) (*profile.Profiles, error)
+	GetProfile(context.Context, *Request) (*profile.Profile, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -89,16 +89,16 @@ type AuthServer interface {
 type UnimplementedAuthServer struct {
 }
 
-func (UnimplementedAuthServer) ListAccounts(context.Context, *account.ListRequest) (*account.Accounts, error) {
+func (UnimplementedAuthServer) ListAccounts(context.Context, *Request) (*account.Accounts, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAccounts not implemented")
 }
-func (UnimplementedAuthServer) GetAccount(context.Context, *account.GetRequest) (*account.Account, error) {
+func (UnimplementedAuthServer) GetAccount(context.Context, *Request) (*account.Account, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccount not implemented")
 }
-func (UnimplementedAuthServer) ListProfiles(context.Context, *profile.ListRequest) (*profile.Profiles, error) {
+func (UnimplementedAuthServer) ListProfiles(context.Context, *Request) (*profile.Profiles, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListProfiles not implemented")
 }
-func (UnimplementedAuthServer) GetProfile(context.Context, *profile.GetRequest) (*profile.Profile, error) {
+func (UnimplementedAuthServer) GetProfile(context.Context, *Request) (*profile.Profile, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProfile not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
@@ -115,7 +115,7 @@ func RegisterAuthServer(s grpc.ServiceRegistrar, srv AuthServer) {
 }
 
 func _Auth_ListAccounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(account.ListRequest)
+	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -127,13 +127,13 @@ func _Auth_ListAccounts_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/auth.Auth/ListAccounts",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).ListAccounts(ctx, req.(*account.ListRequest))
+		return srv.(AuthServer).ListAccounts(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Auth_GetAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(account.GetRequest)
+	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -145,13 +145,13 @@ func _Auth_GetAccount_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/auth.Auth/GetAccount",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).GetAccount(ctx, req.(*account.GetRequest))
+		return srv.(AuthServer).GetAccount(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Auth_ListProfiles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(profile.ListRequest)
+	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -163,13 +163,13 @@ func _Auth_ListProfiles_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/auth.Auth/ListProfiles",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).ListProfiles(ctx, req.(*profile.ListRequest))
+		return srv.(AuthServer).ListProfiles(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Auth_GetProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(profile.GetRequest)
+	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -181,7 +181,7 @@ func _Auth_GetProfile_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/auth.Auth/GetProfile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).GetProfile(ctx, req.(*profile.GetRequest))
+		return srv.(AuthServer).GetProfile(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
