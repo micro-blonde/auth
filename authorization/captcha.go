@@ -32,7 +32,10 @@ func (h *authenticator[T]) verifyCaptcha(request gateway.Request) errors.Error {
 		return InvalidCaptchaPasscodeError
 	}
 
-	return InvalidCaptchaPasscodeError
+	if passcode == "" || passcode != captcha["code"] {
+		return InvalidCaptchaPasscodeError
+	}
+	return nil
 }
 
 func (h *authenticator[T]) setCaptchaVerified(request gateway.Request, verified bool) {
