@@ -3,7 +3,8 @@ package account
 type Base struct {
 	Id uint64
 
-	Status Status
+	InternalStatus InternalStatus
+	Status         Status
 }
 
 type Account[T Model] struct {
