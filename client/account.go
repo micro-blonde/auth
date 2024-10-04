@@ -11,7 +11,7 @@ import (
 func (c *client) GetAccount(ctx context.Context,
 	in *auth.Request, opts ...grpc.CallOption) (*account.Account, error) {
 	result := new(account.Account)
-	if err := c.ensureService(); err != nil {
+	if err := c.EnsureService(); err != nil {
 		return result, err
 	}
 	result, err := c.client.GetAccount(ctx, in, opts...)
@@ -24,7 +24,7 @@ func (c *client) GetAccount(ctx context.Context,
 func (c *client) ListAccounts(ctx context.Context,
 	in *auth.Request, opts ...grpc.CallOption) (*account.Accounts, error) {
 	result := new(account.Accounts)
-	if err := c.ensureService(); err != nil {
+	if err := c.EnsureService(); err != nil {
 		return result, err
 	}
 	result, err := c.client.ListAccounts(ctx, in, opts...)

@@ -12,10 +12,14 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
+type ConnHandlerFunc = func(conn *grpc.ClientConn)
+
 type Client interface {
 	auth.AuthClient
 	Initialize()
 	IsConnected() bool
+	RegisterOnNewConnection(f ConnHandlerFunc)
+	EnsureService() errors.Error
 }
 
 type client struct {
@@ -25,6 +29,8 @@ type client struct {
 	conn        *grpc.ClientConn
 	dialOptions []grpc.DialOption
 	client      auth.AuthClient
+
+	connHandlers []ConnHandlerFunc
 }
 
 func New(logger log.Logger, registry registry.Registry) Client {
@@ -33,6 +39,7 @@ func New(logger log.Logger, registry registry.Registry) Client {
 		dialOptions: []grpc.DialOption{
 			grpc.WithTransportCredentials(insecure.NewCredentials()),
 		},
+		connHandlers: make([]func(conn *grpc.ClientConn), 0),
 	}
 	if err := registry.Unmarshal(&c.config); err != nil {
 		panic(err)
@@ -56,7 +63,7 @@ func (c *client) IsConnected() bool {
 	return true
 }
 
-func (c *client) ensureService() errors.Error {
+func (c *client) EnsureService() errors.Error {
 	if !c.config.enabled {
 		return errors.Forbidden().
 			WithId("AuthClientNotEnabledError").
@@ -93,5 +100,12 @@ func (c *client) ensureConnection() {
 		c.conn.Connect()
 		c.logger.Infof("connected. state: %s", c.conn.GetState().String())
 		c.client = auth.NewAuthClient(c.conn)
+		for _, f := range c.connHandlers {
+			f(c.conn)
+		}
 	}
+}
+
+func (c *client) RegisterOnNewConnection(f ConnHandlerFunc) {
+	c.connHandlers = append(c.connHandlers, f)
 }

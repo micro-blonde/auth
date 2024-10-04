@@ -1,7 +1,6 @@
 package account
 
 type Model interface {
-	comparable
 	GetDeliveryResult() any
 }
 
