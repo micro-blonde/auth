@@ -1,2 +1,4 @@
 github.com/ginger-core/errors v0.0.0-20230703084505-b10c3f9cedfb h1:akBGMOMV7nOA5GAiav1HCQ9+fg4SmJKDlORYzgXBw8Q=
 github.com/ginger-core/errors v0.0.0-20230703084505-b10c3f9cedfb/go.mod h1:cWRsvoY6zQYQoDdg/8NqUC5r47R4tUs+uLEugCbCjqo=
+github.com/ginger-core/query v0.0.0-20230608153800-9375f70642d8 h1:YD5UjtaOj3Upo7EvSapbdylNkV9PcmUTglIOLYEjSI8=
+github.com/ginger-core/query v0.0.0-20230608153800-9375f70642d8/go.mod h1:2hXSiuhznDu3c15tA35x4UVCo5kdgFnQiohdt8wK2aw=

@@ -1,9 +1,11 @@
 package profile
 
+import "github.com/ginger-core/query"
+
 type Model interface {
 	comparable
 	GetDeliveryResult() any
-	GetUpdates() map[string]any
+	ProcessUpdates(update query.Update) (changed bool)
 }
 
 type StructValueGetter interface {

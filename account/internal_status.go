@@ -4,8 +4,6 @@ type InternalStatus uint64
 
 const (
 	InternalStatusRegistered InternalStatus = 0b1 << iota
-	InternalStatusVerified
-	InternalStatusRejected
 )
 
 func (s InternalStatus) Uint64() uint64 {

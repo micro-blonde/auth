@@ -4,8 +4,6 @@ type Status uint64
 
 const (
 	StatusRegistered Status = 0b1 << iota
-	StatusVerified
-	StatusRejected
 	StatusBlocked
 	StatusDisabled
 )
